@@ -39,6 +39,10 @@ const print = @import("std").debug.print;
 const WeirdContainer = struct {
     data: [*]const u8,
     length: usize,
+
+    fn printable(c: WeirdContainer) []const u8 {
+        return c.data[0..c.length];
+    }
 };
 
 pub fn main() void {
@@ -60,7 +64,7 @@ pub fn main() void {
     // length... You've actually solved this problem before!
     //
     // Here's a big hint: do you remember how to take a slice?
-    const printable = ???;
+    const printable = foo.printable();
 
     print("{s}\n", .{printable});
 }
