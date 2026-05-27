@@ -53,7 +53,26 @@ const SearchResult = struct {
 pub fn main(init: std.process.Init) !void {
     const io = init.io;
 
-    const data = [_]u32{ 10, 23, 45, 67, 12, 69, 3, 54, 69, 42, 68, 56, 71, 79, 79, 75, 70, 77 };
+    const data = [_]u32{
+        10,
+        23,
+        45,
+        67,
+        12,
+        69,
+        3,
+        54,
+        69,
+        42,
+        68,
+        56,
+        71,
+        79,
+        79,
+        75,
+        70,
+        77,
+    };
     const threshold = 70;
     const mid = data.len / 2;
 
@@ -63,10 +82,10 @@ pub fn main(init: std.process.Init) !void {
 
     // Launch two workers, each searching half the array.
     // Remember, we want them to be guaranteed separate units of concurrency.
-    var f1 = ???(searchThreshold, .{ io, data[0..mid], threshold, 0, 0, &queue });
+    var f1 = try io.concurrent(searchThreshold, .{ io, data[0..mid], threshold, 0, 0, &queue });
     defer _ = f1.cancel(io);
 
-    var f2 = ???(searchThreshold, .{ io, data[mid..], threshold, mid, 1, &queue });
+    var f2 = try io.concurrent(searchThreshold, .{ io, data[mid..], threshold, mid, 1, &queue });
     defer _ = f2.cancel(io);
 
     // Wait for the first result.
