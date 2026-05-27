@@ -147,7 +147,7 @@ fn collector(
     }
 }
 
-fn printGardenReport(weather: &GardenWeather) void {
+fn printGardenReport(weather: *GardenWeather) void {
     print("=== Doctor Zoraptera's Garden Report ===\n", .{});
     print("Temperature : {}C\n", .{weather.temperature});
     print("Humidity    : {}%\n", .{weather.humidity});
